@@ -27,6 +27,10 @@ class RecipeAdapter(private val list: ArrayList<Recipe>, private val context : C
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        //check if its null
+        holder.bindViews(list[position])
+
+
     }
 
     override fun getItemCount(): Int {
@@ -54,8 +58,9 @@ class RecipeAdapter(private val list: ArrayList<Recipe>, private val context : C
                     .placeholder(android.R.drawable.ic_menu_upload)
                     .error(android.R.drawable.ic_menu_upload)
                     .into(thumbnail)
-
-
+            } else
+            {
+                Picasso.get().load(android.R.drawable.ic_menu_upload).into(thumbnail)
             }
 
         }
