@@ -1,8 +1,10 @@
 package com.example.recipeme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
@@ -11,38 +13,24 @@ import org.json.JSONArray
 import org.json.JSONException
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var search_Btn:Button
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        var volleyRequest:RequestQueue? = null
-
-        super.onCreate(savedInstanceState)
+    super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //instantiate our request
-        volleyRequest = Volley.newRequestQueue(this)
+        search_Btn = findViewById(R.id.searchbtn)
+
+        search_Btn.setOnClickListener {
+            var intent = Intent(this, RecipeLayout::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
-    //fetch recipe data
-    fun fetchRecipe(url:String) {
-        val arrayReq = JsonArrayRequest(Request.Method.GET, url, null,
-            {
-                response : JSONArray ->
-                try {
-                    Log.d("Response", response.toString())
 
 
-                } catch (e: JSONException) {
-                  e.printStackTrace()
-                }
-            }, {
-                 try {
 
-                 } catch (e:JSONException) {
-                     e.printStackTrace()
-                 }
-            }
-
-            )
     }
-}
+
