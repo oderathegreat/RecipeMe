@@ -7,6 +7,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
+import com.example.recipeme.model.Recipe
 import org.json.JSONArray
 import org.json.JSONException
 import kotlin.math.log
@@ -41,8 +42,18 @@ class RecipeLayout : AppCompatActivity() {
                     for (i in 0 until response.length()-1) {
                         var drinksObj = response.getJSONObject(i)
 
-                       var tagline = drinksObj.getString("tagline")
-                        Log.d("TAGLINE===>", tagline.toString())
+                       var beertitle = drinksObj.getString("name")
+                       var beerdesc = drinksObj.getString("description")
+                       var beerthumb = drinksObj.getString("image_url")
+                        //Log.d("TAGLINE===>", tagline.toString()) working fine
+
+                        //Construct our recipe object
+                        var recipe = Recipe()
+                        recipe.title = beertitle
+                        recipe.descri = beerdesc
+                        recipe.thumbnail = beerthumb
+
+
                     }
 
 
