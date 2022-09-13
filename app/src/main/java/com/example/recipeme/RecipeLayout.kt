@@ -20,25 +20,28 @@ class RecipeLayout : AppCompatActivity() {
     var volleyRequest: RequestQueue? = null
     var recipeList:ArrayList<Recipe>? = null
     var recipeAdapter:RecipeAdapter? =null
-    var layoutManager: RecyclerView.LayoutManager? =null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_layout)
-
-        //instantiate our request
-        volleyRequest = Volley.newRequestQueue(this)
+        var recycler: RecyclerView  = findViewById(R.id.recyclerView_id)
+        recycler.layoutManager = LinearLayoutManager(this)
 
         //instantiate our recipe list
         recipeList = ArrayList<Recipe>()
+        recipeAdapter = RecipeAdapter(recipeList!!, this)
+        recycler.adapter = recipeAdapter
+        //instantiate our request
+        volleyRequest = Volley.newRequestQueue(this)
 
+        //04 instantiate recycler view
 
         val url = "https://api.punkapi.com/v2/beers"
         fetchRecipe(url)
-
-
     }
 
     //fetch recipe data
@@ -65,18 +68,8 @@ class RecipeLayout : AppCompatActivity() {
                         recipe.thumbnail = beerthumb
 
                         recipeList!!.add(recipe)
-
-                        //Instantiate our adapter
-                        recipeAdapter = RecipeAdapter(recipeList!!, this)
-                        layoutManager = LinearLayoutManager(this)
-
-
-
                     }
-
-
-
-
+                    recipeAdapter!!.notifyDataSetChanged()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -88,7 +81,5 @@ class RecipeLayout : AppCompatActivity() {
                 }
             })
         volleyRequest!!.add(arrayReq)
-
-
     }
 }
